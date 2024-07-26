@@ -68,7 +68,7 @@ class LoginForm extends StatelessWidget {
               );
             },
           ),
-           SizedBox(height: 20),
+          SizedBox(height: 20),
           TextButton(
             onPressed: () {
               Navigator.push(
@@ -83,3 +83,4 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
+
