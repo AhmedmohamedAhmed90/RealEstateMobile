@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
-
+import '../Contact/ContactPage.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -47,6 +47,10 @@ class LoginForm extends StatelessWidget {
             listener: (context, state) {
               if (state is LoginSuccess) {
                 // Navigate to another page or show a success message
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ContactProfilePage()),
+              );
               } else if (state is LoginFailure) {
                 // Show an error message
                 ScaffoldMessenger.of(context).showSnackBar(
