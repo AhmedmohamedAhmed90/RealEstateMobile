@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../ServicePage/ServicePage.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
 
@@ -9,6 +10,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Page'),
+        backgroundColor: Color(0xFF7038DB), // Purple color
       ),
       body: BlocProvider(
         create: (context) => LoginCubit(),
@@ -33,12 +35,23 @@ class LoginForm extends StatelessWidget {
             controller: emailController,
             decoration: InputDecoration(
               labelText: 'Email',
+              labelStyle: TextStyle(color: Color(0xFF1F7EEB)), // Blue color
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF1F7EEB)), // Blue color
+              ),
             ),
           ),
+          SizedBox(height: 16.0),
           TextField(
             controller: passwordController,
             decoration: InputDecoration(
               labelText: 'Password',
+              labelStyle: TextStyle(color: Color(0xFF1F7EEB)), // Blue color
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF1F7EEB)), // Blue color
+              ),
             ),
             obscureText: true,
           ),
@@ -46,11 +59,16 @@ class LoginForm extends StatelessWidget {
           BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state is LoginSuccess) {
-                // Navigate to another page or show a success message
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServicePage()),
+                );
               } else if (state is LoginFailure) {
-                // Show an error message
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Login Failed: ${state.errorMessage}')),
+                  SnackBar(
+                    content: Text('Login Failed: ${state.errorMessage}'),
+                    backgroundColor: Colors.red, // Error color
+                  ),
                 );
               }
             },
@@ -64,6 +82,9 @@ class LoginForm extends StatelessWidget {
                   final password = passwordController.text;
                   context.read<LoginCubit>().login(email, password);
                 },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF1F7EEB), // Blue color
+                ),
                 child: Text('Login'),
               );
             },
@@ -76,6 +97,9 @@ class LoginForm extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => SignupPage()),
               );
             },
+            style: TextButton.styleFrom(
+              primary: Color(0xFF7038DB), // Purple color
+            ),
             child: Text('Don\'t have an account? Sign Up'),
           ),
         ],
@@ -83,4 +107,3 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
-

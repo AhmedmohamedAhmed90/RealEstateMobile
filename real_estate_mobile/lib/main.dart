@@ -14,23 +14,36 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        // Define the default brightness and colors.
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xFF1f7eeb), // Blue
+          onPrimary: Colors.white,
+          secondary: Color(0xFF7038db), // Purple
+          onSecondary: Colors.white,
+          surface: Colors.white,
+          onSurface: Colors.black,
+          background: Colors.white,
+          onBackground: Colors.black,
+          error: Colors.red,
+          onError: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.white, // White background for the scaffold
+        textTheme: TextTheme(
+          displayLarge: TextStyle(color: Colors.black, fontSize: 36), // Large display text
+          headlineMedium: TextStyle(color: Colors.black, fontSize: 28), // Medium headline text
+          bodyMedium: TextStyle(color: Colors.black, fontSize: 16), // Body text
+          titleLarge: TextStyle(color: Colors.black, fontSize: 20), // Large title text
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF1f7eeb), // Blue background for AppBar
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        cardColor: Colors.white, // Background color of cards
+        buttonTheme: ButtonThemeData(
+          buttonColor: Color(0xFF7038db), // Purple button color
+          textTheme: ButtonTextTheme.primary,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
