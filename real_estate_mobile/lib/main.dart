@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'modules/Login/LoginPage.dart';
 import 'modules/Contact/ContactPage.dart';
+import 'modules/Splash/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: SplashScreen(),
     );
   }
 }

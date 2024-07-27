@@ -28,7 +28,6 @@ class _ContactProfilePageState extends State<ContactProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -64,10 +63,11 @@ class ContactProfileContent extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           } else if (state is ContactProfileLoaded) {
             final profile = state.profile;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CircleAvatar(
