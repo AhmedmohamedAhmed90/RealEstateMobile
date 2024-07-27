@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../ServicePage/ServicePage.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
+import '../Contact/ContactPage.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -61,7 +62,7 @@ class LoginForm extends StatelessWidget {
               if (state is LoginSuccess) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ServicePage()),
+                  MaterialPageRoute(builder: (context) => ContactProfilePage()),
                 );
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -83,7 +84,7 @@ class LoginForm extends StatelessWidget {
                   context.read<LoginCubit>().login(email, password);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF1F7EEB), // Blue color
+                  backgroundColor: Color(0xFF1F7EEB), // Blue color
                 ),
                 child: Text('Login'),
               );
@@ -98,7 +99,7 @@ class LoginForm extends StatelessWidget {
               );
             },
             style: TextButton.styleFrom(
-              primary: Color(0xFF7038DB), // Purple color
+              foregroundColor: Color(0xFF7038DB), // Purple color
             ),
             child: Text('Don\'t have an account? Sign Up'),
           ),

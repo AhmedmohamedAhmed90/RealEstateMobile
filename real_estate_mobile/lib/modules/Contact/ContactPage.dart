@@ -5,7 +5,6 @@ import './cubit/contact_profile_cubit.dart';
 import './cubit/contact_profile_state.dart';
 import './repository/contact_profile_repository.dart';
 import '../ServicePage/ServicePage.dart';
-import '../TicketHistory/TicketHistory.dart';
 
 class ContactProfilePage extends StatefulWidget {
   @override
@@ -18,8 +17,6 @@ class _ContactProfilePageState extends State<ContactProfilePage> {
   static List<Widget> _pages = <Widget>[
     ContactProfileContent(),
     ServicePage(),
-    TicketHistoryPage(),
-    
   ];
 
   void _onItemTapped(int index) {
@@ -31,10 +28,7 @@ class _ContactProfilePageState extends State<ContactProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Contact Profile', style: GoogleFonts.robotoMono()),
-        backgroundColor: Colors.deepPurple,
-      ),
+     
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -45,10 +39,6 @@ class _ContactProfilePageState extends State<ContactProfilePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.build, color: Colors.green),
             label: 'Services',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history, color: Colors.orange),
-            label: 'Ticket History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code, color: Colors.red),

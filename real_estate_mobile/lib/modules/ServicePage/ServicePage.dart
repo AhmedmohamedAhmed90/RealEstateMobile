@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/ServiceModel.dart';
 import './cubit/ServiceCubit.dart';
+import '../ServiceHistory/ServiceHistory.dart';
 
 class ServicePage extends StatelessWidget {
   @override
@@ -89,6 +90,24 @@ class ServicePage extends StatelessWidget {
                                             color: Colors.white, // Text color
                                           ),
                                           overflow: TextOverflow.ellipsis,
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor: Color(0xFF1F7EEB), backgroundColor: Colors.white, // Text color
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => TicketHistoryPage(ticketId: ticket.id),
+                                                ),
+                                              );
+                                            },
+                                            child: Text('View Notes'),
+                                          ),
                                         ),
                                       ],
                                     ),
