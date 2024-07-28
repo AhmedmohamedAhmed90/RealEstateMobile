@@ -10,7 +10,13 @@ class ServicePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Service Tickets'),
-        backgroundColor: Color(0xFF7038DB), // Purple color
+        backgroundColor: Color(0xFF7038DB),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); 
+          },
+        ), 
       ),
       body: BlocProvider(
         create: (context) => ServiceCubit()..fetchTickets(),
@@ -90,24 +96,6 @@ class ServicePage extends StatelessWidget {
                                             color: Colors.white, // Text color
                                           ),
                                           overflow: TextOverflow.ellipsis,
-                                        ),
-                                        SizedBox(height: 8.0),
-                                        Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor: Color(0xFF1F7EEB), backgroundColor: Colors.white, // Text color
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => TicketHistoryPage(ticketId: ticket.id),
-                                                ),
-                                              );
-                                            },
-                                            child: Text('View Notes'),
-                                          ),
                                         ),
                                       ],
                                     ),

@@ -86,7 +86,10 @@ class LoginForm extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF1F7EEB), // Blue color
                 ),
-                child: Text('Login'),
+               child: Text(
+    'Login',
+    style: TextStyle(color: Colors.white),
+  ),
               );
             },
           ),
