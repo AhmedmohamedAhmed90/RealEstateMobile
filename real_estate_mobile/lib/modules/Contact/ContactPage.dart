@@ -6,54 +6,8 @@ import './cubit/contact_profile_state.dart';
 import './repository/contact_profile_repository.dart';
 import '../ServicePage/ServicePage.dart';
 import '../QrCode/qr_code_page.dart';
-class ContactProfilePage extends StatefulWidget {
-  @override
-  _ContactProfilePageState createState() => _ContactProfilePageState();
-}
 
-class _ContactProfilePageState extends State<ContactProfilePage> {
-  int _selectedIndex = 0;
-
-  static List<Widget> _pages = <Widget>[
-    ContactProfileContent(),
-    ServicePage(),
-  QRCodePage()
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.blue),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.build, color: Colors.green),
-            label: 'Services',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code, color: Colors.red),
-            label: 'QR Generator',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class ContactProfileContent extends StatelessWidget {
+class ContactProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

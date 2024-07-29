@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../ServicePage/ServicePage.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
-import '../Contact/ContactPage.dart';
-
+import '../Home/home_page.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class LoginForm extends StatelessWidget {
               if (state is LoginSuccess) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ContactProfilePage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../QrCode/cubit/qr_code_cubit.dart';
+import 'cubit/qr_code_cubit.dart';
 
 class QRCodePage extends StatelessWidget {
   QRCodePage({Key? key}) : super(key: key);
