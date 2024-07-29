@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../models/ticket_history_model.dart';
+import '../../../models/ticket_history_model.dart';
 
 part 'service_history_state.dart';
 

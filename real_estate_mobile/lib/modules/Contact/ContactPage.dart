@@ -5,7 +5,7 @@ import './cubit/contact_profile_cubit.dart';
 import './cubit/contact_profile_state.dart';
 import './repository/contact_profile_repository.dart';
 import '../ServicePage/ServicePage.dart';
-
+import '../QrCode/qr_code_page.dart';
 class ContactProfilePage extends StatefulWidget {
   @override
   _ContactProfilePageState createState() => _ContactProfilePageState();
@@ -17,6 +17,7 @@ class _ContactProfilePageState extends State<ContactProfilePage> {
   static List<Widget> _pages = <Widget>[
     ContactProfileContent(),
     ServicePage(),
+  QRCodePage()
   ];
 
   void _onItemTapped(int index) {

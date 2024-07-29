@@ -14,9 +14,9 @@ class ServicePage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(); 
+            Navigator.of(context).pop();
           },
-        ), 
+        ),
       ),
       body: BlocProvider(
         create: (context) => ServiceCubit()..fetchTickets(),
@@ -101,6 +101,23 @@ class ServicePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 8.0),
+                                Center(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => TicketHistoryPage(ticketId: ticket.id),
+                                        ),
+                                      );
+                                    },
+                                    child: Text('View Updates'),
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor: Color(0xFF1F7EEB), backgroundColor: Colors.white, // Text color
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
                               ],
                             ),
                           );

@@ -1,4 +1,4 @@
-import '../models/contact_profile_model.dart';
+import '../../../models/contact_profile_model.dart';
 
 abstract class ContactProfileState {}
 

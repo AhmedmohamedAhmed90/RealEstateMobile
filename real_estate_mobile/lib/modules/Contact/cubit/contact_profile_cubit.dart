@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../models/contact_profile_model.dart';
+import '../../../models/contact_profile_model.dart';
 import '../repository/contact_profile_repository.dart';
 import 'contact_profile_state.dart';
 
