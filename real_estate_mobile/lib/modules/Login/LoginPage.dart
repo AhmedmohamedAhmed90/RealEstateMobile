@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../ServicePage/ServicePage.dart';
+import '../ServicesScreen/ServicesScreen.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
 import '../Contact/ContactPage.dart';
@@ -62,7 +63,8 @@ class LoginForm extends StatelessWidget {
               if (state is LoginSuccess) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => ContactProfilePage()),
+                  //MaterialPageRoute(builder: (context) => ContactProfilePage()),
+                  MaterialPageRoute(builder: (context) => ServicesScreen()),
                 );
               } else if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(

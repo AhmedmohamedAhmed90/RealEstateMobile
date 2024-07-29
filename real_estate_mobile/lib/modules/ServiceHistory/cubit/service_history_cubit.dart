@@ -12,7 +12,7 @@ class TicketHistoryCubit extends Cubit<TicketHistoryState> {
   Future<void> fetchTicketHistory(String ticketId) async {
     emit(TicketHistoryLoading());
     try {
-      final response = await http.get(Uri.parse('http://127.0.0.1:5001/api/ticket/viewhistory/$ticketId'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:5001/api/ticket/viewhistory/$ticketId'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         final List<TicketHistory> ticketHistory = data.map((json) => TicketHistory.fromJson(json)).toList();
