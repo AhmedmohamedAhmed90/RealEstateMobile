@@ -62,7 +62,7 @@ class ServiceCubit extends Cubit<ServiceState> {
       final String? formattedToken = token != null ? '$token' : null;
 
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:5001/api/ticket/'),
+        Uri.parse('http://10.0.2.2:5001/api/ticket/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           if (formattedToken != null) 'Authorization': formattedToken,
