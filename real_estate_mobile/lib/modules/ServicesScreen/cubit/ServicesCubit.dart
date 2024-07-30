@@ -41,5 +41,3 @@ class ServicesCubit extends Cubit<ServicesState> {
     }
   }
 }
-
-

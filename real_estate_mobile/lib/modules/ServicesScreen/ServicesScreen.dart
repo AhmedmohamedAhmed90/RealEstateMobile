@@ -1,125 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import '../../models/ServiceModel.dart';
-// import './cubit/ServicesCubit.dart';
-
-// class ServicesScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Service Tickets'),
-//         backgroundColor: Color(0xFF7038DB),
-//         leading: IconButton(
-//           icon: Icon(Icons.arrow_back),
-//           onPressed: () {
-//             Navigator.of(context).pop();
-//           },
-//         ),
-//       ),
-//       body: BlocProvider(
-//         create: (context) => ServicesCubit()..fetchServices(),
-//         child: BlocBuilder<ServicesCubit, ServicesState>(
-//           builder: (context, state) {
-//             if (state is ServicesLoading) {
-//               return Center(child: CircularProgressIndicator());
-//             } else if (state is ServicesSuccess) {
-//               return CustomScrollView(
-//                 slivers: [
-//                   SliverPadding(
-//                     padding: const EdgeInsets.all(8.0),
-//                     sliver: SliverGrid(
-//                       delegate: SliverChildBuilderDelegate(
-//                         (BuildContext context, int index) {
-//                           final service = state.services[index];
-//                           return Card(
-//                             elevation: 4.0,
-//                             margin: EdgeInsets.all(8.0),
-//                             color: Color(0xFF1F7EEB), // Blue color
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Expanded(
-//                                   child: SingleChildScrollView(
-//                                     padding: const EdgeInsets.all(8.0),
-//                                     child: Column(
-//                                       crossAxisAlignment: CrossAxisAlignment.start,
-//                                       children: [
-//                                         Text(
-//                                           'Name: ${service.name}',
-//                                           style: TextStyle(
-//                                             fontSize: 18.0,
-//                                             fontWeight: FontWeight.bold,
-//                                             color: Colors.white, // Text color
-//                                           ),
-//                                         ),
-//                                         SizedBox(height: 8.0),
-//                                         Text(
-//                                           'Created Date: ${service.createdDate}',
-//                                           style: TextStyle(
-//                                             fontSize: 16.0,
-//                                             color: Colors.white, // Text color
-//                                           ),
-//                                           overflow: TextOverflow.ellipsis,
-//                                         ),
-//                                         Text(
-//                                           'Updated Date: ${service.updatedDate}',
-//                                           style: TextStyle(
-//                                             fontSize: 16.0,
-//                                             color: Colors.white, // Text color
-//                                           ),
-//                                           overflow: TextOverflow.ellipsis,
-//                                         ),
-//                                         Text(
-//                                           'Deleted: ${service.deleted ? 'Yes' : 'No'}',
-//                                           style: TextStyle(
-//                                             fontSize: 16.0,
-//                                             color: Colors.white, // Text color
-//                                           ),
-//                                           overflow: TextOverflow.ellipsis,
-//                                         ),
-//                                         SizedBox(height: 4.0),
-//                                         Text(
-//                                           'Photo URL: ${service.photo}',
-//                                           style: TextStyle(
-//                                             fontSize: 16.0,
-//                                             color: Colors.white, // Text color
-//                                           ),
-//                                           overflow: TextOverflow.ellipsis,
-//                                         ),
-//                                       ],
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 SizedBox(height: 8.0),
-//                               ],
-//                             ),
-//                           );
-//                         },
-//                         childCount: state.services.length,
-//                       ),
-//                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                         crossAxisCount: 2,
-//                         crossAxisSpacing: 8.0,
-//                         mainAxisSpacing: 8.0,
-//                         childAspectRatio: 1.0, // Adjust to fit the card content
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               );
-//             } else if (state is ServicesFailure) {
-//               return Center(child: Text(state.errorMessage));
-//             } else {
-//               return Center(child: Text('Unexpected state!'));
-//             }
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/ServiceModel.dart';
@@ -177,7 +55,7 @@ class ServicesScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                   'Name: ${service.name}',
+                                    'Name: ${service.name}',
                                     style: TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -213,4 +91,3 @@ class ServicesScreen extends StatelessWidget {
     );
   }
 }
-
