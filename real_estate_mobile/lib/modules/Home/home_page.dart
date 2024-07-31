@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import './cubit/home_cubit.dart';
 import '../News/news_detail_page.dart'; // Assuming you have this page for news details
 import '../ServicePage/ServicePage.dart';
@@ -32,28 +33,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.blue),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.build, color: Colors.green),
-            label: 'Services',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code, color: Colors.red),
-            label: 'QR Generator',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.purple),
-            label: 'Profile',
-          ),
+      bottomNavigationBar: ConvexAppBar(
+        style: TabStyle.reactCircle,
+        items: const [
+          TabItem(icon: Icons.home, title: 'Home'),
+          TabItem(icon: Icons.build, title: 'Services'),
+          TabItem(icon: Icons.qr_code, title: 'QR Generator'),
+          TabItem(icon: Icons.person, title: 'Profile'),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
+        initialActiveIndex: _selectedIndex,
         onTap: _onItemTapped,
+        backgroundColor: Color.fromARGB(165, 0, 0, 0), // Dark blue color
+        activeColor: Color.fromARGB(255, 232, 161, 46), // Bright blue color
+        color: Colors.grey,
       ),
     );
   }
@@ -69,96 +61,141 @@ class HomePageContent extends StatelessWidget {
   }
 }
 
+
 class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      builder: (context, state) {
-        if (state is HomeInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is HomeLoaded) {
-          return Column(
-            children: [
-              // Carousel
-              Container(
-                height: 200, // Adjust the height here
-                child: PageView.builder(
-                  itemCount: state.carouselImages.length,
-                  itemBuilder: (context, index) {
-                    return Image.network(
-                      state.carouselImages[index],
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(Icons.error);
-                      },
-                    );
-                  },
-                ),
-              ),
-              // Compounds
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: state.compounds.map((compound) {
-                  return Container(
-                    width: 100,
-                    child: Column(
-                      children: [
-                        Image.network(
-                          compound['image']!,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(Icons.error);
-                          },
-                        ),
-                        Text(compound['name']!),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-              // News
-              SizedBox(height: 16),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: state.news.length,
-                  itemBuilder: (context, index) {
-                    final newsItem = state.news[index];
-                    return Card(
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(8),
-                        leading: Image.network(
-                          newsItem['image']!,
-                          width: 100,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(Icons.error);
-                          },
-                        ),
-                        title: Text(newsItem['title']!),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => NewsDetailPage(newsItem: newsItem),
-                            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home', style: TextStyle(fontWeight: FontWeight.bold , color: Color.fromARGB(255, 232, 161, 46),)),
+        backgroundColor: Color.fromARGB(165, 0, 0, 0), // Dark blue color
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
+        ),
+      ),
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          if (state is HomeInitial) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is HomeLoaded) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Carousel
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 200,
+                      child: PageView.builder(
+                        itemCount: state.carouselImages.length,
+                        itemBuilder: (context, index) {
+                          return Image.network(
+                            state.carouselImages[index],
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(Icons.error);
+                            },
                           );
                         },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  // Compounds
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    child: Text(
+                      'Compounds',
+                      style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: 130,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.compounds.length,
+                      itemBuilder: (context, index) {
+                        final compound = state.compounds[index];
+                        return Container(
+                          width: 120,
+                          margin: EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  compound['image']!,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(Icons.image);
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(compound['name']!, overflow: TextOverflow.ellipsis),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  // News
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                    child: Text(
+                      'Latest News',
+                      style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: state.news.length,
+                    itemBuilder: (context, index) {
+                      final newsItem = state.news[index];
+                      return Card(
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.all(8),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              newsItem['image']!,
+                              width: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons.newspaper);
+                              },
+                            ),
+                          ),
+                          title: Text(newsItem['title']!, maxLines: 2, overflow: TextOverflow.ellipsis),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewsDetailPage(newsItem: newsItem),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20,)
+                ],
               ),
-            ],
-          );
-        } else {
-          return const Center(child: Text('Something went wrong!'));
-        }
-      },
+            );
+          } else {
+            return const Center(child: Text('Something went wrong!'));
+          }
+        },
+      ),
     );
   }
 }
-

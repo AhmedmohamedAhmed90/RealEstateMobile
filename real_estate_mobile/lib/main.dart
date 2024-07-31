@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         // Add other providers if necessary
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Al Dawlia',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
