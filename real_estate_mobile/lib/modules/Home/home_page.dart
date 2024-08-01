@@ -7,6 +7,7 @@ import '../News/news_detail_page.dart'; // Assuming you have this page for news 
 import '../ServicePage/ServicePage.dart';
 import '../QrCode/qr_code_page.dart';
 import '../Contact/ContactPage.dart';
+import '../ServicesScreen/ServicesScreen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _pages = <Widget>[
     HomePageContent(),
-    ServicePage(),
+    ServicesScreen(),
     QRCodePage(),
     ContactProfilePage()
   ];

@@ -35,35 +35,35 @@ class ServicesScreen extends StatelessWidget {
                           return Card(
                             elevation: 4.0,
                             margin: EdgeInsets.all(8.0),
-                            color: Color(0xFF1F7EEB), // Blue color
+                            color: Color.fromARGB(255, 151, 187, 228), // Blue color
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Photo at the top of the card
                                 Container(
                                   width: double.infinity,
-                                  height: 120.0, // Adjust height as needed
+                                  height: 80.0, // Adjust height as needed
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(service.photo),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                     borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
                                   ),
                                 ),
                                 // Service name below the photo
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Name: ${service.name}',
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white, // Text color
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     service.name ?? 'N/A',
+                                //     style: TextStyle(
+                                //       fontSize: 18.0,
+                                //       fontWeight: FontWeight.bold,
+                                //       color: Colors.white, // Text color
+                                //     ),
+                                //     overflow: TextOverflow.ellipsis,
+                                //   ),
+                                // ),
                               ],
                             ),
                           );
@@ -71,7 +71,7 @@ class ServicesScreen extends StatelessWidget {
                         childCount: state.services.length,
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 3,
                         crossAxisSpacing: 8.0,
                         mainAxisSpacing: 8.0,
                         childAspectRatio: 0.75, // Adjust to fit the card content
