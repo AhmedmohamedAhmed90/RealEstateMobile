@@ -16,7 +16,7 @@ class NewsDetailPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              newsItem['title']!,
+              newsItem['text']!,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
