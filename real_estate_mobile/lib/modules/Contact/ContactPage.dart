@@ -194,7 +194,7 @@ class ContactProfilePage extends StatelessWidget {
                                   style: GoogleFonts.lato(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).textTheme.headline6?.color,
+                                    color: Theme.of(context).textTheme.titleLarge?.color,
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -202,7 +202,7 @@ class ContactProfilePage extends StatelessWidget {
                                   'Compound: ${profile.compoundName}',
                                   style: GoogleFonts.lato(
                                     fontSize: 18,
-                                    color: Theme.of(context).textTheme.bodyText1?.color, 
+                                    color: Theme.of(context).textTheme.bodyLarge?.color, 
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -210,7 +210,7 @@ class ContactProfilePage extends StatelessWidget {
                                   'Unit: ${profile.unitName}',
                                   style: GoogleFonts.lato(
                                     fontSize: 18,
-                                    color: Theme.of(context).textTheme.bodyText1?.color, 
+                                    color: Theme.of(context).textTheme.bodyLarge?.color, 
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -218,7 +218,7 @@ class ContactProfilePage extends StatelessWidget {
                                   'Unit Cost: \$${profile.unitCost}',
                                   style: GoogleFonts.lato(
                                     fontSize: 18,
-                                    color: Theme.of(context).textTheme.bodyText1?.color, 
+                                    color: Theme.of(context).textTheme.bodyLarge?.color, 
                                   ),
                                 ),
                                 SizedBox(height: 10),
@@ -226,7 +226,7 @@ class ContactProfilePage extends StatelessWidget {
                                   'Next Installment Amount: \$${profile.nextInstallmentAmount}',
                                   style: GoogleFonts.lato(
                                     fontSize: 18,
-                                    color: Theme.of(context).textTheme.bodyText1?.color, 
+                                    color: Theme.of(context).textTheme.bodyLarge?.color, 
                                   ),
                                 ),
                               ],

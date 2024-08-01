@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../utils/app_constants.dart';
+
 class TicketForm extends StatefulWidget {
   final String serviceId;
   final VoidCallback onSuccess;
@@ -68,7 +70,7 @@ class _TicketFormState extends State<TicketForm> {
         }
 
         final response = await http.post(
-          Uri.parse('http://127.0.0.1:5001/api/ticket/add'),
+          Uri.parse('${baseURL}/ticket/add'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

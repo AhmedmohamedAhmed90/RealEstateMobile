@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SplashLoaded) {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => LoginPage()),
             );
           }
         },

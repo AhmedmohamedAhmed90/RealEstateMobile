@@ -20,7 +20,14 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Signup')),
+      appBar: AppBar(
+        title: Text('Signup'),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+        titleTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+      ),
       body: BlocProvider(
         create: (context) => SignupCubit(),
         child: Padding(
@@ -29,38 +36,38 @@ class _SignupPageState extends State<SignupPage> {
             key: _formKey,
             child: ListView(
               children: [
-                TextFormField(
+                _buildTextField(
                   controller: _usernameController,
-                  decoration: InputDecoration(labelText: 'Username'),
+                  labelText: 'Username',
                   validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
                 ),
-                TextFormField(
+                _buildTextField(
                   controller: _passwordController,
-                  decoration: InputDecoration(labelText: 'Password'),
+                  labelText: 'Password',
                   obscureText: true,
                   validator: (value) => value!.isEmpty ? 'Please enter a password' : null,
                 ),
-                TextFormField(
+                _buildTextField(
                   controller: _emailController,
-                  decoration: InputDecoration(labelText: 'Email'),
+                  labelText: 'Email',
                   validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
                 ),
-                TextFormField(
+                _buildTextField(
                   controller: _phoneNumberController,
-                  decoration: InputDecoration(labelText: 'Phone Number'),
+                  labelText: 'Phone Number',
                   validator: (value) => value!.isEmpty ? 'Please enter a phone number' : null,
                 ),
-                TextFormField(
+                _buildTextField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(labelText: 'First Name'),
+                  labelText: 'First Name',
                   validator: (value) => value!.isEmpty ? 'Please enter a first name' : null,
                 ),
-                TextFormField(
+                _buildTextField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(labelText: 'Last Name'),
+                  labelText: 'Last Name',
                   validator: (value) => value!.isEmpty ? 'Please enter a last name' : null,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 BlocConsumer<SignupCubit, SignupState>(
                   listener: (context, state) {
                     if (state is SignupSuccess) {
@@ -86,6 +93,14 @@ class _SignupPageState extends State<SignupPage> {
                           );
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white70,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                       child: Text('Signup'),
                     );
                   },
@@ -94,6 +109,33 @@ class _SignupPageState extends State<SignupPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    bool obscureText = false,
+    required String? Function(String?) validator,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(color: Colors.grey, fontSize: 16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: BorderSide(color: Colors.black),
+          ),
+        ),
+        validator: validator,
       ),
     );
   }

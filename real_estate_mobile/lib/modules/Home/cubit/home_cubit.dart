@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../utils/app_constants.dart';
+
 // Define states
 abstract class HomeState extends Equatable {
   const HomeState();
@@ -62,7 +64,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<List<Map<String, String>>> _fetchNews() async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:5001/api/news/news'));
+    final response = await http.get(Uri.parse('${baseURL}/news/news'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -84,9 +86,9 @@ class HomeCubit extends Cubit<HomeState> {
   Future<List<Map<String, String>>> _fetchCompounds() async {
     // Mock data for compounds, replace with actual API call if needed
     return [
-      {'name': 'Compound A', 'image': 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg'},
-      {'name': 'Compound B', 'image': 'https://via.placeholder.com/150?text=B'},
-      {'name': 'Compound C', 'image': 'https://via.placeholder.com/150?text=C'},
+      {'name': 'Regents Square', 'image': 'https://static.wixstatic.com/media/323294_a6bef655d3ac4f8687eb37ed8b07c472~mv2.jpg/v1/fill/w_1920,h_1013,al_c,q_85,enc_auto/323294_a6bef655d3ac4f8687eb37ed8b07c472~mv2.jpg'},
+      {'name': 'Regents Park', 'image': 'https://static.wixstatic.com/media/323294_b575b0bd8744403f9f0182ccd9223832~mv2.jpg/v1/fill/w_2037,h_1405,al_c,q_90,enc_auto/323294_b575b0bd8744403f9f0182ccd9223832~mv2.jpg'},
+      {'name': 'Land Mark', 'image': 'https://static.wixstatic.com/media/b0f6bb_cb85e144feca4dfa914c40bc4e0753fd~mv2.jpg/v1/fill/w_1340,h_945,al_c,q_85,enc_auto/b0f6bb_cb85e144feca4dfa914c40bc4e0753fd~mv2.jpg'},
     ];
   }
 }

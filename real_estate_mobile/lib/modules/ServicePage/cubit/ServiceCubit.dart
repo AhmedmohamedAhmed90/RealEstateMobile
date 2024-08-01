@@ -46,6 +46,8 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:real_estate_mobile/models/ServiceModel.dart';
 
+import '../../../utils/app_constants.dart';
+
 part 'ServiceStates.dart';
 
 class ServiceCubit extends Cubit<ServiceState> {
@@ -62,7 +64,7 @@ class ServiceCubit extends Cubit<ServiceState> {
       final String? formattedToken = token != null ? '$token' : null;
 
       final response = await http.get(
-        Uri.parse('http://127.0.0.1:5001/api/ticket/'),
+        Uri.parse('${baseURL}/ticket/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           if (formattedToken != null) 'Authorization': formattedToken,

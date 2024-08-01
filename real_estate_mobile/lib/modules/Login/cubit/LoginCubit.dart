@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../utils/app_constants.dart';
+
 part 'LoginStates.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -15,7 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:5001/api/user/login'), 
+        Uri.parse('$baseURL/user/login'), 
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -31,7 +33,7 @@ class LoginCubit extends Cubit<LoginState> {
 
         // Store the token securely
         await _storage.write(key: 'auth_token', value: token);
-        print('HTTP Response: ${response.statusCode} +doneeeeeeee');
+        print('HTTP Response: ${response.statusCode} +Token Saved');
         print(_storage.read(key: 'auth_token'));
 
         emit(LoginSuccess());
