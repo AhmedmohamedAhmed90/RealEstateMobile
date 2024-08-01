@@ -69,7 +69,7 @@ class ContactProfilePage extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      'Next Installment Due: ${profile.nextInstallmentDueDate.toLocal()}'.split(' ')[0],
+                      'Next Installment Due: ${profile.nextInstallmentDueDate.toLocal()}',
                       style: GoogleFonts.robotoMono(
                         fontSize: 18,
                         color: Colors.deepPurple[300],
