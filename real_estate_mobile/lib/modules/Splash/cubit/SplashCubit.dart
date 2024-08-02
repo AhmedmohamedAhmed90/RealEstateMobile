@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:meta/meta.dart';
 
 part 'SplashStates.dart';
@@ -6,10 +7,21 @@ part 'SplashStates.dart';
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
 
-  void startSplashScreen() {
+  final FlutterSecureStorage _storage = FlutterSecureStorage();
+
+  Future<void> startSplashScreen() async {
     emit(SplashLoading());
-    Future.delayed(Duration(seconds: 3), () {
+
+    String? token = await _storage.read(key: 'auth_token');
+
+    await Future.delayed(Duration(seconds: 2));
+
+    if (token != null) {
+     
       emit(SplashLoaded());
-    });
+    } else {
+      
+      emit(SplashInitial());
+    }
   }
 }

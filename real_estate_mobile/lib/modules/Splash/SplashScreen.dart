@@ -12,6 +12,12 @@ class SplashScreen extends StatelessWidget {
       child: BlocListener<SplashCubit, SplashState>(
         listener: (context, state) {
           if (state is SplashLoaded) {
+          
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          } else if (state is SplashInitial) {
+            
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => LoginPage()),
             );

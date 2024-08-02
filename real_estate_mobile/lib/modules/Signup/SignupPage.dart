@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:real_estate_mobile/modules/Home/home_page.dart';
+import 'package:real_estate_mobile/modules/Login/LoginPage.dart';
 import './cubit/SignupCubit.dart';
 import './cubit/SignupStates.dart';
 
@@ -10,12 +12,11 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController(); // New Address Field
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +38,6 @@ class _SignupPageState extends State<SignupPage> {
             child: ListView(
               children: [
                 _buildTextField(
-                  controller: _usernameController,
-                  labelText: 'Username',
-                  validator: (value) => value!.isEmpty ? 'Please enter a username' : null,
-                ),
-                _buildTextField(
-                  controller: _passwordController,
-                  labelText: 'Password',
-                  obscureText: true,
-                  validator: (value) => value!.isEmpty ? 'Please enter a password' : null,
-                ),
-                _buildTextField(
                   controller: _emailController,
                   labelText: 'Email',
                   validator: (value) => value!.isEmpty ? 'Please enter an email' : null,
@@ -67,13 +57,26 @@ class _SignupPageState extends State<SignupPage> {
                   labelText: 'Last Name',
                   validator: (value) => value!.isEmpty ? 'Please enter a last name' : null,
                 ),
+                _buildTextField(
+                  controller: _addressController,
+                  labelText: 'Address', // New Address Field
+                  validator: (value) => value!.isEmpty ? 'Please enter an address' : null,
+                ),
                 SizedBox(height: 30),
                 BlocConsumer<SignupCubit, SignupState>(
                   listener: (context, state) {
                     if (state is SignupSuccess) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Signup Successful')));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.successMessage)),
+                      );
+                       Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                     } else if (state is SignupFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errorMessage)),
+                      );
                     }
                   },
                   builder: (context, state) {
@@ -84,12 +87,11 @@ class _SignupPageState extends State<SignupPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           BlocProvider.of<SignupCubit>(context).signup(
-                            _usernameController.text,
-                            _passwordController.text,
-                            _emailController.text,
-                            _phoneNumberController.text,
                             _firstNameController.text,
                             _lastNameController.text,
+                            _phoneNumberController.text,
+                            _emailController.text,
+                            _addressController.text,
                           );
                         }
                       },

@@ -16,7 +16,7 @@ class ServicesScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: CustomAppBar(
-            title: 'Service Tickets',
+            title: 'Services',
             onToggleTheme: () {
               
               final themeCubit = BlocProvider.of<ThemeCubit>(context);

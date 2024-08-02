@@ -55,7 +55,7 @@ class LoginForm extends StatelessWidget {
               controller: emailController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.email, color: Color(0xFF1F7EEB)),
-                labelText: 'Email',
+                labelText: 'UserName',
                 labelStyle: TextStyle(color: Color(0xFF1F7EEB)), // Blue color
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
