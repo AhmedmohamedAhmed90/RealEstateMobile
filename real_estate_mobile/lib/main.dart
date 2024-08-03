@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Al Dawlia',
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+             // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
               scaffoldBackgroundColor: Colors.white, // Light mode background
             textTheme: const TextTheme(
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             darkTheme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            //  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
               scaffoldBackgroundColor: Colors.black, // Dark mode background
                 textTheme: const TextTheme(

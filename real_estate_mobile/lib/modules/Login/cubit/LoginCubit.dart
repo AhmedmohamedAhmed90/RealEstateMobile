@@ -30,9 +30,11 @@ class LoginCubit extends Cubit<LoginState> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final String token = responseData['token'];
+        final String userid = responseData['userId'];
 
-        // Store the token securely
         await _storage.write(key: 'auth_token', value: token);
+        await _storage.write(key: 'userid', value: userid);
+        
         print('HTTP Response: ${response.statusCode} +Token Saved');
         print(_storage.read(key: 'auth_token'));
 
