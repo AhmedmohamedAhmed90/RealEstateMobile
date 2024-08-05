@@ -3,8 +3,9 @@
 
 // class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 //   final String title;
+//   final VoidCallback onToggleTheme; // Callback to handle theme toggle
 
-//   CustomAppBar({required this.title});
+//   CustomAppBar({required this.title, required this.onToggleTheme});
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -23,6 +24,14 @@
 //           bottom: Radius.circular(10),
 //         ),
 //       ),
+//       actions: [
+//         IconButton(
+//           icon: Icon(Icons.brightness_6), // Toggle icon
+//           onPressed: onToggleTheme,
+//           color: Color.fromARGB(255, 232, 161, 46), // Icon color
+//         ),
+//         SizedBox(width: 16), // Space between icon and edge
+//       ],
 //     );
 //   }
 
@@ -35,12 +44,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback onToggleTheme; // Callback to handle theme toggle
+  final VoidCallback onToggleTheme;
 
   CustomAppBar({required this.title, required this.onToggleTheme});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return AppBar(
       title: Text(
         title,
@@ -56,13 +67,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           bottom: Radius.circular(10),
         ),
       ),
+      // leading: IconButton(
+      //   icon: Icon(
+      //     Icons.arrow_back,
+      //     color: isDarkMode ? Colors.white : Color.fromARGB(255, 232, 161, 46),
+      //   ),
+      //   onPressed: () {
+      //     Navigator.of(context).pop();
+      //   },
+      // ),
       actions: [
         IconButton(
-          icon: Icon(Icons.brightness_6), // Toggle icon
+          icon: Icon(Icons.brightness_6),
           onPressed: onToggleTheme,
-          color: Color.fromARGB(255, 232, 161, 46), // Icon color
+          color: Color.fromARGB(255, 232, 161, 46),
         ),
-        SizedBox(width: 16), // Space between icon and edge
+        SizedBox(width: 16),
       ],
     );
   }
