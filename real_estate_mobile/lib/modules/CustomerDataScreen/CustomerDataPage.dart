@@ -80,7 +80,7 @@ class _CustomerDataPageState extends State<CustomerDataPage> {
                 style: TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 232, 161, 46),
+                backgroundColor: Color.fromARGB(255, 232, 161, 46),
                 minimumSize: Size(double.infinity, 50),
               ),
             ),

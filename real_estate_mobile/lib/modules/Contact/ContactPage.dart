@@ -242,7 +242,7 @@ class ContactProfilePage extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey[800],
+                                    backgroundColor: Colors.grey[800],
                                     minimumSize: Size(double.infinity, 50),
                                   ),
                                 ),
@@ -281,7 +281,7 @@ class ContactProfilePage extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey[800],
+                                    backgroundColor: Colors.grey[800],
                                     minimumSize: Size(double.infinity, 50),
                                   ),
                                 ),
@@ -295,7 +295,7 @@ class ContactProfilePage extends StatelessWidget {
                                     style: TextStyle(color: Color.fromARGB(255, 232, 161, 46)),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(165, 0, 0, 0),
+                                    backgroundColor: Color.fromARGB(165, 0, 0, 0),
                                     minimumSize: Size(double.infinity, 50),
                                   ),
                                 ),

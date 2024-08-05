@@ -19,7 +19,7 @@ class CustomBottomNavBar extends StatelessWidget {
       ],
       initialActiveIndex: selectedIndex,
       onTap: onTap,
-      backgroundColor: Color.fromARGB(165, 0, 0, 0),
+      backgroundColor: Color.fromARGB(163, 70, 70, 70),
       activeColor: Color.fromARGB(255, 232, 161, 46),
       color: Colors.grey,
     );
