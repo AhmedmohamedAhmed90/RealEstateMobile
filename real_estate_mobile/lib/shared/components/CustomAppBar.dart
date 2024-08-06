@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -9,16 +8,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return AppBar(
-      centerTitle: true,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontWeight: FontWeight.normal,
-          color: Color.fromARGB(146, 232, 161, 46),
-        ),
+      centerTitle: false,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Image.asset(
+          //   'assets/images/Al-Dawlialogo.webp', // Replace with your image path
+          //   height: 80, // Adjust the height as needed
+          // ),
+          SizedBox(width: 8), // Spacing between the image and the title
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: Color.fromARGB(255, 165, 128, 91),
+            ),
+          ),
+        ],
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -30,7 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.0), // Height of the bottom border
         child: Container(
-          color: const Color.fromARGB(255, 135, 134, 134), // Color of the bottom border
+          color: const Color.fromARGB(255, 165, 128, 91), // Color of the bottom border
           height: 1.0,
         ),
       ),
@@ -38,13 +45,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.brightness_6),
           onPressed: onToggleTheme,
-          color: Color.fromARGB(255, 232, 161, 46),
+          color: Color.fromARGB(255, 165, 128, 91),
         ),
         SizedBox(width: 16),
       ],
     );
-
-    
   }
 
   @override

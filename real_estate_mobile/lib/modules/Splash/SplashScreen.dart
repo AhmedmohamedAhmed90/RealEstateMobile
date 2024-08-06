@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_estate_mobile/modules/Home/home_page.dart';
+import 'package:real_estate_mobile/modules/Home/home_wrapper.dart';
 import '../Login/LoginPage.dart';
 import 'cubit/SplashCubit.dart';
 
@@ -14,7 +15,7 @@ class SplashScreen extends StatelessWidget {
           if (state is SplashLoaded) {
           
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => MainWrapper()),
             );
           } else if (state is SplashInitial) {
             
