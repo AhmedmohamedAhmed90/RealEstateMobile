@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../utils/app_constants.dart';
 
@@ -31,9 +34,15 @@ class QRCodeCubit extends Cubit<QRCodeState> {
       );
 
       if (response.statusCode == 200) {
+        print('Response status: ${response.statusCode}');
+print('Response body: ${response.body}');
         final Map<String, dynamic> responseData = jsonDecode(response.body);
-        final String qrCode = responseData['qrCode'];
-        emit(QRCodeGenerated(qrCode: qrCode));
+      final String fullQrCode = responseData['qrCode'];
+      
+      // Extract the base64 part of the QR code
+      final String qrCode = fullQrCode.split(',')[1];
+      
+      emit(QRCodeGenerated(qrCode: qrCode));
       } else {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final String error = responseData['message'] ?? 'An unknown error occurred';
@@ -43,4 +52,19 @@ class QRCodeCubit extends Cubit<QRCodeState> {
       emit(QRCodeError('An error occurred during QR code generation: $e'));
     }
   }
+
+  static Future<void> shareQRCode(String qrCode) async {
+  try {
+    // Create a temporary file to store the QR code image
+    final tempDir = await getTemporaryDirectory();
+    final file = await File('${tempDir.path}/qr_code.png').create();
+    await file.writeAsBytes(base64Decode(qrCode));
+
+    // Share the file
+    await Share.shareXFiles([XFile(file.path)], text: 'Here is your QR Code');
+  } catch (e) {
+    print('Error sharing QR code: $e');
+    // You might want to show an error message to the user here
+  }
+}
 }

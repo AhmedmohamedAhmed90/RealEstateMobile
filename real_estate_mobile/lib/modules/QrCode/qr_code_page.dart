@@ -229,6 +229,7 @@ import 'cubit/qr_code_cubit.dart';
 import '../../shared/components/CustomBottomNavBar.dart'; // Import CustomBottomNavBar
 import '../../shared/components/CustomAppBar.dart'; // Import CustomAppBar
 import '../../shared/appcubit/ThemeCubit.dart'; // Import ThemeCubit
+import 'package:share_plus/share_plus.dart';
 
 class QRCodePage extends StatefulWidget {
   QRCodePage({Key? key}) : super(key: key);
@@ -285,7 +286,7 @@ class _QRCodePageState extends State<QRCodePage> {
                           dateController,
                           isReadOnly: true,
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.calendar_today, color: Color(0xFF004F8B)),
+                            icon: Icon(Icons.calendar_today, color: Color.fromARGB(255, 232, 161, 46)),
                             onPressed: () => _selectDate(context),
                           ),
                         ),
@@ -306,7 +307,7 @@ class _QRCodePageState extends State<QRCodePage> {
                                     const SizedBox(height: 10),
                                     Text(
                                       'QR Code Generated!',
-                                      style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF004F8B)),
+                                      style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 232, 161, 46)),
                                     ),
                                   ],
                                 ),
@@ -385,30 +386,62 @@ class _QRCodePageState extends State<QRCodePage> {
     }
   }
 
-  void _showQRCodeDialog(BuildContext context, String qrCode) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Your QR Code'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.memory(
-              base64Decode(qrCode),
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        ),
+  // void _showQRCodeDialog(BuildContext context, String qrCode) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Your QR Code'),
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           Image.memory(
+  //             base64Decode(qrCode),
+  //             fit: BoxFit.contain,
+  //           ),
+  //           const SizedBox(height: 10),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: const Text('Close'),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+ void _showQRCodeDialog(BuildContext context, String qrCode) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Your QR Code'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.memory(
+            base64Decode(qrCode),
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => QRCodeCubit.shareQRCode(qrCode),
+            child: const Text('Share QR Code'),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
+  
 
   void _showErrorDialog(BuildContext context, String error) {
     showDialog(
@@ -427,6 +460,8 @@ class _QRCodePageState extends State<QRCodePage> {
       ),
     );
   }
+
+  
 
   Widget _buildTextField(String label, TextEditingController controller,
       {bool isReadOnly = false, Widget? suffixIcon, bool isPassword = false}) {

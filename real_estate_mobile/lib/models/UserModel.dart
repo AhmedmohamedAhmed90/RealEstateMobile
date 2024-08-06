@@ -1,3 +1,5 @@
+import 'QrCodeModel.dart';
+
 class User {
   final String id;
   final String username;
@@ -12,7 +14,7 @@ class User {
   final List<String> roles;
   final DateTime createdDate;
   final bool deleted;
-  final List<String> qrCodes;
+  final List<QRCode> qrCodes; 
   final DateTime updatedDate;
 
   User({
@@ -48,7 +50,7 @@ class User {
       roles: List<String>.from(json['roles']),
       createdDate: DateTime.parse(json['createdDate']),
       deleted: json['deleted'],
-      qrCodes: List<String>.from(json['qrCodes']),
+      qrCodes: List<QRCode>.from(json['qrCodes'].map((item) => QRCode.fromJson(item))),
       updatedDate: DateTime.parse(json['updatedDate']),
     );
   }
@@ -68,7 +70,7 @@ class User {
       'roles': roles,
       'createdDate': createdDate.toIso8601String(),
       'deleted': deleted,
-      'qrCodes': qrCodes,
+      'qrCodes': qrCodes.map((qrCode) => qrCode.toJson()).toList(),
       'updatedDate': updatedDate.toIso8601String(),
     };
   }
