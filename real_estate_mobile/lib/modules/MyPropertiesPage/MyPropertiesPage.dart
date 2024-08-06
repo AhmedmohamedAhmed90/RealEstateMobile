@@ -373,12 +373,12 @@ class _MyPropertiesPageState extends State<MyPropertiesPage> {
             );
           },
         ),
-        bottomNavigationBar: CustomBottomNavBar(
-          selectedIndex: 1, // Adjust based on your navigation
-          onTap: (index) {
-            // Handle bottom navigation
-          },
-        ),
+        // bottomNavigationBar: CustomBottomNavBar(
+        //   selectedIndex: 1, // Adjust based on your navigation
+        //   onTap: (index) {
+        //     // Handle bottom navigation
+        //   },
+        // ),
       ),
     );
   }

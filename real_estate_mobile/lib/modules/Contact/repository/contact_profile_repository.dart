@@ -95,7 +95,7 @@ class ContactProfileRepository {
         throw Exception('Failed to load customer profile: ${response.reasonPhrase}');
       }
     } catch (error) {
-      throw Exception('Error fetching customer profile: $error');
+      throw Exception('Error in fetching customer profile: $error');
     }
   }
 

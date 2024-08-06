@@ -31,6 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: 5.0.0
+  carousel_slider: ^4.2.1
+  carousel_indicator: ^1.0.0
+  
+   
 
 
   cupertino_icons: ^1.0.2
@@ -46,9 +50,10 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   equatable: ^2.0.5
   cached_network_image: ^3.2.3
-  carousel_slider: ^4.0.0
   convex_bottom_bar: ^3.2.0
   flutter_snake_navigationbar: ^0.6.1
+  custom_line_indicator_bottom_navbar: ^0.0.8
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   
@@ -79,6 +84,7 @@ flutter:
   assets:
    - lib/images/pngtree-user-avatar-placeholder-png-image_3918418.jpg
    - assets/images/
+  #  - assets/images/usericon1.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

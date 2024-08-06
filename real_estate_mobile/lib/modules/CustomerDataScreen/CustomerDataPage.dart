@@ -73,17 +73,33 @@ class _CustomerDataPageState extends State<CustomerDataPage> {
             SizedBox(height: 16),
             _buildTextField('Password', _passwordController, isPassword: true),
             SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _onUpdatePressed,
-              child: Text(
-                'Update My Data',
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 232, 161, 46),
-                minimumSize: Size(double.infinity, 50),
-              ),
-            ),
+             Center(
+                      child: ElevatedButton(
+                        onPressed: _onUpdatePressed,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[600],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          minimumSize: Size(double.infinity, 50),
+                        ),
+                        child: Text(
+                          'Generate QR Code',
+                          style: GoogleFonts.lato(fontSize: 16, color: Color.fromARGB(255, 232, 161, 46), fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+            // ElevatedButton(
+            //   onPressed: _onUpdatePressed,
+            //   child: Text(
+            //     'Update My Data',
+            //     style: TextStyle(color: Color.fromARGB(255, 232, 161, 46)),
+            //   ),
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.grey[600],
+            //     minimumSize: Size(double.infinity, 50),
+            //   ),
+            // ),
           ],
         ),
       ),
