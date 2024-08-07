@@ -57,6 +57,7 @@ class _CustomerDataPageState extends State<CustomerDataPage> {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Customer Information',
+        showBackButton: true,
         onToggleTheme: () {
                 context.read<ThemeCubit>().toggleTheme();
         },
@@ -146,7 +147,7 @@ class _CustomerDataPageState extends State<CustomerDataPage> {
         labelStyle: GoogleFonts.roboto(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: Colors.grey[800],
+          color: Color.fromRGBO(142, 139, 136, 1),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -159,7 +160,12 @@ class _CustomerDataPageState extends State<CustomerDataPage> {
           ),
         ),
       ),
-      style: GoogleFonts.roboto(fontSize: 16),
+      style: GoogleFonts.roboto(
+      fontSize: 16,
+    ).copyWith(
+      color:  Theme.of(context).textTheme.bodySmall?.color, // User input text color
+    ),
+     
     );
   }
 }

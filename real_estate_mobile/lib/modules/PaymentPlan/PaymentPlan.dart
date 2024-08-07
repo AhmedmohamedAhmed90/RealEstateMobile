@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/PaymentPlanModel.dart'; // Import your PaymentPlan model
+import '../../shared/appcubit/ThemeCubit.dart';
 import '../../shared/components/CustomAppBar.dart'; // Import your custom AppBar
 
 class PaymentPlanPage extends StatelessWidget {
@@ -11,12 +13,13 @@ class PaymentPlanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Payment Plan',
-        onToggleTheme: () {
-          // Add your theme toggle logic here if needed
-        },
-      ),
+       appBar: CustomAppBar(
+          title: 'My Properties',
+          showBackButton: true, // Enable the back button
+          onToggleTheme: () {
+            context.read<ThemeCubit>().toggleTheme();
+          },
+        ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

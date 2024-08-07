@@ -116,10 +116,10 @@ class HomeContent extends StatelessWidget {
                             label: item['label'] as String,
                             icon: item['icon'] as IconData,
                             onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => item['page'] as Widget),
-                              );
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => item['page'] as Widget),
+                              // );
                             },
                           );
                         },

@@ -279,6 +279,7 @@ class _MyPropertiesPageState extends State<MyPropertiesPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'My Properties',
+          showBackButton: true, // Enable the back button
           onToggleTheme: () {
             context.read<ThemeCubit>().toggleTheme();
           },

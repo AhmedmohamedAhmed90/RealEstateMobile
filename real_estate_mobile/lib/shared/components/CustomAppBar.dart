@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback onToggleTheme;
+  final bool showBackButton;
 
-  CustomAppBar({required this.title, required this.onToggleTheme});
+  CustomAppBar({required this.title, required this.onToggleTheme, this.showBackButton = false,});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 1.0,
         ),
       ),
+       leading: showBackButton
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: Color.fromARGB(255, 0, 0, 0), // Back button color
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          : null, // Show the back button if showBackButton is true
+  
       actions: [
         IconButton(
           icon: Icon(Icons.brightness_6),

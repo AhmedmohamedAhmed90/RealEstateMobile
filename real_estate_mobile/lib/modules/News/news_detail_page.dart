@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../shared/appcubit/ThemeCubit.dart';
+import '../../shared/components/CustomAppBar.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final Map<String, dynamic> newsItem;
@@ -8,16 +12,19 @@ class NewsDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text('News Details',style: TextStyle(color: Colors.black),),
-        iconTheme: IconThemeData(color: Colors.black),
+       appBar: CustomAppBar(
+        title: 'News Details',
+        showBackButton: true,
+        onToggleTheme: () {
+                context.read<ThemeCubit>().toggleTheme();
+        },
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
+            Padding(padding: const EdgeInsets.all(2),
+            child: Image.network(
               newsItem['image']!,
               width: double.infinity,
               height: 200,
@@ -30,6 +37,7 @@ class NewsDetailPage extends StatelessWidget {
                   child: Icon(Icons.error, color: Colors.red),
                 );
               },
+            ),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
