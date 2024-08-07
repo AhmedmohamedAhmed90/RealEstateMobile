@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import "package:file_picker/file_picker.dart";
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
+import 'package:real_estate_mobile/models/projectModel.dart';
 import '../../utils/app_constants.dart';
+import '../../models/OwnedPropertyModel.dart';
+import '../../shared/appcubit/ThemeCubit.dart';
+import '../../shared/components/CustomAppBar.dart';
+import '../../shared/components/CustomBottomNavBar.dart';
 
 class TicketForm extends StatefulWidget {
   final String serviceId;
@@ -17,12 +28,13 @@ class TicketForm extends StatefulWidget {
 
 class _TicketFormState extends State<TicketForm> {
   final _formKey = GlobalKey<FormState>();
-  String? _type;
-  String? _projectId;
-  String? _apartmentNo;
+  String? _selectedPropertyId;
+  String? _selectedProjectId;
   String? _description;
-  List<Map<String, dynamic>> _projects = [];
-  List<Map<String, dynamic>> _properties = [];
+  List<OwnedProperty> _properties = [];
+  List<XFile> _images = [];
+  List<PlatformFile> _webFiles = [];
+  final ImagePicker _picker = ImagePicker();
   final storage = FlutterSecureStorage();
 
   @override
@@ -33,30 +45,54 @@ class _TicketFormState extends State<TicketForm> {
 
   Future<void> _fetchUserProperties() async {
     try {
-      final String? ownedPropertiesJson = await storage.read(key: 'owned_properties');
-      if (ownedPropertiesJson != null) {
-        final List<dynamic> ownedProperties = jsonDecode(ownedPropertiesJson);
-        final Map<String, List<Map<String, dynamic>>> projectsMap = {};
-        for (var propertyData in ownedProperties) {
-          var property = propertyData['property'];
-          var project = property['projects'][0];
-          if (!projectsMap.containsKey(project['_id'])) {
-            projectsMap[project['_id']] = [];
-          }
-          projectsMap[project['_id']]!.add(property);
-        }
+      final String? userId = await storage.read(key: 'userid');
+      if (userId == null) {
+        throw Exception('User ID not found in storage');
+      }
+      
+      final response = await http.get(
+        Uri.parse('http://127.0.0.1:5001/api/customers/customerdata/$userId'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final ownedProperties = data['customer']['ownedProperties'] as List<dynamic>;
+
         setState(() {
-          _projects = projectsMap.entries.map((entry) {
-            return {
-              '_id': entry.key,
-              'name': entry.value.first['projects'][0]['name'],
-              'properties': entry.value,
-            };
+          _properties = ownedProperties.map<OwnedProperty>((propertyData) {
+            return OwnedProperty.fromJson(propertyData);
           }).toList();
         });
+      } else {
+        throw Exception('Failed to load properties');
       }
     } catch (e) {
-      print('Error fetching owned properties: $e');
+      print('Error fetching user properties: $e');
+    }
+  }
+
+  void _handlePropertySelection(String propertyId , String projectId) {
+    setState(() {
+      _selectedPropertyId = propertyId;
+      _selectedProjectId = projectId;
+    });
+  }
+
+  Future<void> _pickImage() async {
+    if (kIsWeb) {
+      final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+      if (result != null) {
+        setState(() {
+          _webFiles.addAll(result.files);
+        });
+      }
+    } else {
+      final pickedImages = await _picker.pickMultiImage();
+      if (pickedImages != null) {
+        setState(() {
+          _images.addAll(pickedImages);
+        });
+      }
     }
   }
 
@@ -64,32 +100,45 @@ class _TicketFormState extends State<TicketForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        final String? userId = await storage.read(key: 'user_id');
-        if (userId == null) {
-          throw Exception('User ID not found in storage');
+        final String? userId = await storage.read(key: 'userid');
+        final String? token = await storage.read(key: 'auth_token'); // Read the token from storage
+        if (userId == null || token == null) {
+          throw Exception('User ID or token not found in storage');
         }
 
-        final response = await http.post(
-          Uri.parse('${baseURL}/ticket/add'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode({
-            'type': _type,
-            'customer': userId,
-            'project': _projectId,
-            'apartmentNo': _apartmentNo,
-            'service': widget.serviceId,
-            'description': _description,
-          }),
-        );
+        final dio = Dio();
+        dio.options.headers['Authorization'] = '$token'; // Add the token to the headers
+        FormData formData = FormData.fromMap({
+          'type': "Service",
+          'customer': userId,
+          'project': _selectedProjectId,
+          'property': _selectedPropertyId,
+          'service': widget.serviceId,
+          'description': _description,
+        });
 
+        if (kIsWeb) {
+          for (var file in _webFiles) {
+            formData.files.add(MapEntry(
+              'files',
+              MultipartFile.fromBytes(file.bytes!, filename: file.name),
+            ));
+          }
+        } else {
+          for (var image in _images) {
+            formData.files.add(MapEntry(
+              'files',
+              await MultipartFile.fromFile(image.path),
+            ));
+          }
+        }
+
+        final response = await dio.post('${baseURL}/ticket/add', data: formData);
         if (response.statusCode == 200) {
           widget.onSuccess();
           Navigator.of(context).pop();
         } else {
-          final Map<String, dynamic> responseData = jsonDecode(response.body);
-          final String error = responseData['message'] ?? 'An unknown error occurred';
+          final String error = response.data['message'] ?? 'An unknown error occurred';
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
         }
       } catch (e) {
@@ -100,85 +149,216 @@ class _TicketFormState extends State<TicketForm> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Create Ticket'),
-      content: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Type'),
-                onSaved: (value) => _type = value,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a type';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Project'),
-                value: _projectId,
-                items: _projects.map((project) {
-                  return DropdownMenuItem<String>(
-                    value: project['_id'],
-                    child: Text(project['name']),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _projectId = value;
-                    _properties = _projects.firstWhere((project) => project['_id'] == value)['properties'];
-                    _apartmentNo = null;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a project';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Apartment No'),
-                value: _apartmentNo,
-                items: _properties.map((property) {
-                  return DropdownMenuItem<String>(
-                    value: property['_id'],
-                    child: Text(property['name']),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _apartmentNo = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select an apartment number';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Description'),
-                onSaved: (value) => _description = value,
-              ),
-            ],
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Create Ticket',
+        onToggleTheme: () {
+          context.read<ThemeCubit>().toggleTheme();
+        },
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Select Property',
+                  style: GoogleFonts.lato(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
+                ),
+                SizedBox(height: 16),
+                if (_properties.isNotEmpty)
+                  ..._properties.map((ownedProperty) {
+                    final property = ownedProperty.property;
+                    final projects = property.projects;
+
+                    return GestureDetector(
+                      onTap: () {
+                        _handlePropertySelection(property.id, projects[0].id);
+                      },
+                      child: Card(
+                        margin: const EdgeInsets.only(bottom: 16),
+                        color: _selectedPropertyId == property.id
+                            ? Theme.of(context).primaryColor.withOpacity(0.2)
+                            : null,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              // Property Photo
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: property.propertyPhotos.isNotEmpty
+                                      ? Image.network(
+                                          property.propertyPhotos[0],
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.network(
+                                          'https://butterflymx.com/wp-content/uploads/2022/07/asset-management-vs-property-management.jpg',
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              // Property and Project Names
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      property.name,
+                                      style: GoogleFonts.lato(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: isDarkMode ? Colors.white : Colors.black,
+                                      ),
+                                    ),
+                                    if (projects != null && projects.isNotEmpty)
+                                      ...projects.map((project) {
+                                        return Text(
+                                          project.name,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 16,
+                                            color: isDarkMode ? Colors.white70 : Colors.grey[700],
+                                          ),
+                                        );
+                                      }).toList()
+                                    else
+                                      Text(
+                                        'No projects available.',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          color: isDarkMode ? Colors.white70 : Colors.grey[700],
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                SizedBox(height: 24),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 3,
+                  onSaved: (value) => _description = value,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a description';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _pickImage,
+                  child: Text('Pick Images'),
+                ),
+                SizedBox(height: 16),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: kIsWeb
+                      ? _webFiles.map((file) {
+                          return Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.memory(
+                                  file.bytes!,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _webFiles.remove(file);
+                                    });
+                                  },
+                                  child: Container(
+                                    color: Colors.red,
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList()
+                      : _images.map((image) {
+                          return Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.file(
+                                  File(image.path),
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _images.remove(image);
+                                    });
+                                  },
+                                  child: Container(
+                                    color: Colors.red,
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-      actions: [
-        TextButton(
-          child: Text('Cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        ElevatedButton(
-          child: Text('Submit'),
-          onPressed: _submitForm,
-        ),
-      ],
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.check),
+        label: Text('Submit'),
+        onPressed: _submitForm,
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: 1, // Adjust based on your navigation
+        onTap: (index) {
+          // Handle bottom navigation
+        },
+      ),
     );
   }
 }
