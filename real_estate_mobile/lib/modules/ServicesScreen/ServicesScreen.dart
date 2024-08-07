@@ -136,7 +136,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                     child: Text(
                                       service.name,
                                       style: TextStyle(
-                                        color: Colors.black87,
+                                        color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.0,
                                       ),

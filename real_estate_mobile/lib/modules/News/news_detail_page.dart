@@ -9,7 +9,9 @@ class NewsDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('News Details'),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        title: Text('News Details',style: TextStyle(color: Colors.black),),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Column(
