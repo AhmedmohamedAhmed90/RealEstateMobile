@@ -109,11 +109,21 @@ class _TicketFormState extends State<TicketForm> {
         final dio = Dio();
         dio.options.headers['Authorization'] = '$token'; // Add the token to the headers
         FormData formData = FormData.fromMap({
+          
           'customer': userId,
           'project': _selectedProjectId,
           'apartmentNo': _selectedPropertyId,
           'service': widget.serviceId,
           'description': _description,
+          // "type":
+          // "category":
+          // "subCategory":
+          // "assignedTo":
+          // "taskOwner":
+          // "caller":
+          // "salesProject":""
+          // "status":"Pending"
+
         });
 
         if (kIsWeb) {
@@ -132,10 +142,10 @@ class _TicketFormState extends State<TicketForm> {
           }
         }
 
-        final response = await dio.post('${baseURL}/ticket/add', data: formData);
+        final response = await dio.post('${baseURL}/ticket/mobileAdd', data: formData);
         if (response.statusCode == 200) {
           widget.onSuccess();
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
         } else {
           final String error = response.data['message'] ?? 'An unknown error occurred';
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
@@ -151,12 +161,7 @@ class _TicketFormState extends State<TicketForm> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Create Ticket',
-        onToggleTheme: () {
-          context.read<ThemeCubit>().toggleTheme();
-        },
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

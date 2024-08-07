@@ -48,7 +48,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 800),
             enlargeCenterPage: true,
-            enlargeFactor: 0.3,
+            enlargeFactor: 0.5,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
               setState(() {

@@ -12,23 +12,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Image.asset(
           //   'assets/images/Al-Dawlialogo.webp', // Replace with your image path
-          //   height: 80, // Adjust the height as needed
+          //   height: 100, // Adjust the height as needed
           // ),
           SizedBox(width: 8), // Spacing between the image and the title
           Text(
             title,
             style: TextStyle(
               fontWeight: FontWeight.normal,
-              color: Color.fromARGB(255, 165, 128, 91),
+              color: Theme.of(context).textTheme.headlineLarge?.color,
             ),
           ),
         ],
       ),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(0), // No rounded corners for bottom
@@ -45,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: Icon(Icons.brightness_6),
           onPressed: onToggleTheme,
-          color: Color.fromARGB(255, 165, 128, 91),
+          color: Color.fromARGB(255, 231, 223, 216),
         ),
         SizedBox(width: 16),
       ],

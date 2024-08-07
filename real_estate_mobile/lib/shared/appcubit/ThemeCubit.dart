@@ -7,15 +7,17 @@ class LightThemeState extends ThemeState {
   ThemeData get themeData => ThemeData(
     unselectedWidgetColor:Colors.black45,
     cardColor: Colors.grey[300],
+    secondaryHeaderColor: Color.fromRGBO(165, 128, 91, 1),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(),
         primaryColor: Color.fromRGBO(165, 128, 91, 1),
         scaffoldBackgroundColor: Color.fromRGBO(248, 248, 248, 1),
         appBarTheme: AppBarTheme(
-          color: Color.fromRGBO(165, 128, 91, 1),
+          // color: Color.fromRGBO(165, 128, 91, 1),
+          color: Color.fromRGBO(255, 255, 255, 1),
           iconTheme: IconThemeData(color: Colors.white),
           toolbarTextStyle: TextTheme(
             titleLarge: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -59,16 +61,19 @@ class LightThemeState extends ThemeState {
 class DarkThemeState extends ThemeState {
   @override
   ThemeData get themeData => ThemeData(
+    cardColor: Color.fromRGBO(165, 128, 91, 1),
+    secondaryHeaderColor: Colors.white,
     unselectedWidgetColor: Colors.white60,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(),
         primaryColor: Color.fromRGBO(165, 128, 91, 1),
         scaffoldBackgroundColor: Color.fromRGBO(33, 37, 41, 1),
         appBarTheme: AppBarTheme(
-          color: Color.fromRGBO(165, 128, 91, 1),
+          // color: Color.fromRGBO(165, 128, 91, 1),
+          color: Color.fromRGBO(142, 139, 136, 1),
           iconTheme: IconThemeData(color: Colors.white),
           toolbarTextStyle: TextTheme(
             titleLarge: TextStyle(
-              color: Colors.white,
+              color: Colors.black87,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

@@ -198,7 +198,7 @@ class HomeContent extends StatelessWidget {
                             },
                           ),
                         ),
-                        title: Text(newsItem['title']!, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).primaryColor)),
+                        title: Text(newsItem['title']!, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).secondaryHeaderColor)),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -246,9 +246,9 @@ class QuickAccessItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 30, color: Theme.of(context).primaryColor), // Use theme color
+            Icon(icon, size: 30, color: Theme.of(context).secondaryHeaderColor), // Use theme color
             const SizedBox(height: 10),
-            Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor) ), // Use theme text style
+            Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).secondaryHeaderColor) ), // Use theme text style
           ],
         ),
       ),

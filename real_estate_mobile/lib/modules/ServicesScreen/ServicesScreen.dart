@@ -52,27 +52,20 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   return ListView(
                     padding: EdgeInsets.zero,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Request a Service',
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8.0),
-                            Divider(
-                              color: Colors.black.withOpacity(0.5),
-                              thickness: 1.5,
-                            ),
-                            SizedBox(height: 16.0),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       SizedBox(height: 8.0),
+                      //       Divider(
+                      //         color: Colors.black.withOpacity(0.5),
+                      //         thickness: 1.5,
+                      //       ),
+                      //       SizedBox(height: 16.0),
+                      //     ],
+                      //   ),
+                      // ),
                       // Add spacing above the GridView
                       SizedBox(height: 16.0),
                       GridView.builder(

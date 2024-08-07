@@ -45,7 +45,7 @@ class NewsDetailPage extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    newsItem['text[en]'] ?? 'No content available',
+                    newsItem['title'] ?? 'No content available',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
