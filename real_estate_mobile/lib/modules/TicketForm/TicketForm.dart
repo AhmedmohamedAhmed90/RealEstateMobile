@@ -109,10 +109,9 @@ class _TicketFormState extends State<TicketForm> {
         final dio = Dio();
         dio.options.headers['Authorization'] = '$token'; // Add the token to the headers
         FormData formData = FormData.fromMap({
-          'type': "Service",
           'customer': userId,
           'project': _selectedProjectId,
-          'property': _selectedPropertyId,
+          'apartmentNo': _selectedPropertyId,
           'service': widget.serviceId,
           'description': _description,
         });
