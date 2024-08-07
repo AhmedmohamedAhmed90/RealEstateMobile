@@ -112,7 +112,12 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 import '../../../utils/app_constants.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../models/CustomerModel.dart';
+import '../../../utils/app_constants.dart';
+import 'customer_service.dart';
 
 // Define states
 abstract class HomeState extends Equatable {
@@ -152,17 +157,23 @@ class HomeError extends HomeState {
 
 // Define cubit
 class HomeCubit extends Cubit<HomeState> {
+  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  
+
   HomeCubit() : super(HomeInitial()) {
     loadHomeData();
   }
+   
 
   void loadHomeData() async {
     emit(HomeLoading());
 
     try {
+      final String? userId = await _storage.read(key: 'userid');
       final carouselImages = await _fetchCarouselImages();
       final compounds = await _fetchCompounds();
       final news = await _fetchNews();
+      await fetchCustomerProfile(userId!);
 
       emit(HomeLoaded(
         carouselImages: carouselImages,
@@ -202,6 +213,7 @@ class HomeCubit extends Cubit<HomeState> {
         return {
           'title': newsItem['news']['title'] as String,
           'image': (newsItem['news']['photos'] as List<dynamic>).isNotEmpty ? newsItem['news']['photos'][0] as String : '',
+          'entext': newsItem['news']['text']['en'] as String ,
         };
       }).toList();
     } else {
@@ -218,5 +230,40 @@ class HomeCubit extends Cubit<HomeState> {
       //{'name': 'Land Mark', 'image': 'https://static.wixstatic.com/media/b0f6bb_cb85e144feca4dfa914c40bc4e0753fd~mv2.jpg/v1/fill/w_1340,h_945,al_c,q_85,enc_auto/b0f6bb_cb85e144feca4dfa914c40bc4e0753fd~mv2.jpg'},
     ];
   }
+
+  Future<void> fetchCustomerProfile(String userId) async {
+    final String? token = await _storage.read(key: 'auth_token');
+
+    if (token == null) {
+      throw Exception('No authentication token found.');
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('$baseURL/customers/customerdata/$userId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        if (data.containsKey('customer')) {
+          final customer = Customer.fromJson(data['customer']);
+          CustomerService().setCustomer(customer); // Store in service
+        } else {
+          throw Exception('Invalid response structure: No customer data found.');
+        }
+      } else if (response.statusCode == 401) {
+        throw Exception('Unauthorized access - Please log in again.');
+      } else {
+        throw Exception('Failed to load customer profile: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      throw Exception('Error in fetching customer profile: $error');
+    }
+  }
+  
 }
 

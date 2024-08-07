@@ -42,14 +42,10 @@ class NewsDetailPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    newsItem['createdAt'] ?? 'No date available',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    newsItem['entext'] ?? 'No date available',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    newsItem['title'] ?? 'No content available',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                 
                 ],
               ),
             ),

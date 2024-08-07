@@ -33,6 +33,9 @@ class LightThemeState extends ThemeState {
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Color.fromRGBO(33, 37, 41, 1)),
           bodyMedium: TextStyle(color: Color.fromRGBO(33, 37, 41, 1)),
+          //  bodySmall: TextStyle(color:  Color.fromRGBO(33, 37, 41, 1)),
+          // titleLarge: TextStyle(color:  Color.fromRGBO(33, 37, 41, 1)),
+          // headlineMedium: TextStyle(color:  Color.fromRGBO(33, 37, 41, 1)),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

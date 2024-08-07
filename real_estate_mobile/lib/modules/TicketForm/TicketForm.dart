@@ -10,12 +10,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:file_picker/file_picker.dart";
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:real_estate_mobile/models/projectModel.dart';
+import '../../models/CustomerModel.dart';
 import '../../utils/app_constants.dart';
 import '../../models/OwnedPropertyModel.dart';
 import '../../shared/appcubit/ThemeCubit.dart';
 import '../../shared/components/CustomAppBar.dart';
 import '../../shared/components/CustomBottomNavBar.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
+
+import '../Home/cubit/customer_service.dart';
 
 class TicketForm extends StatefulWidget {
   final String serviceId;
@@ -101,17 +104,19 @@ class _TicketFormState extends State<TicketForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        final String? userId = await storage.read(key: 'userid');
+        Customer? customer = CustomerService().customer;
+
+        final String? customerId = customer?.id;
         final String? token = await storage.read(key: 'auth_token'); // Read the token from storage
-        if (userId == null || token == null) {
-          throw Exception('User ID or token not found in storage');
+        if (customerId == null || token == null) {
+          throw Exception('customer ID or token not found in storage');
         }
 
         final dio = Dio();
         dio.options.headers['Authorization'] = '$token'; // Add the token to the headers
         FormData formData = FormData.fromMap({
           
-          'customer': userId,
+          'customer': customerId,
           'project': _selectedProjectId,
           'apartmentNo': _selectedPropertyId,
           'service': widget.serviceId,

@@ -65,39 +65,39 @@ class ContactProfileRepository {
 
   ContactProfileRepository();
 
-  Future<Customer?> fetchCustomerProfile(String userId) async {
-    final String? token = await _storage.read(key: 'auth_token');
+  // Future<Customer?> fetchCustomerProfile(String userId) async {
+  //   final String? token = await _storage.read(key: 'auth_token');
 
-    if (token == null) {
-      throw Exception('No authentication token found.');
-    }
+  //   if (token == null) {
+  //     throw Exception('No authentication token found.');
+  //   }
 
-    try {
-      final response = await http.get(
-        Uri.parse('$baseURL/customers/customerdata/$userId'),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('$baseURL/customers/customerdata/$userId'),
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        if (data.containsKey('customer')) {
-          final Customer customer = Customer.fromJson(data['customer']);
-          return customer;
-        } else {
-          throw Exception('Invalid response structure: No customer data found.');
-        }
-      } else if (response.statusCode == 401) {
-        throw Exception('Unauthorized access - Please log in again.');
-      } else {
-        throw Exception('Failed to load customer profile: ${response.reasonPhrase}');
-      }
-    } catch (error) {
-      throw Exception('Error in fetching customer profile: $error');
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       final Map<String, dynamic> data = json.decode(response.body);
+  //       if (data.containsKey('customer')) {
+  //         final Customer customer = Customer.fromJson(data['customer']);
+  //         return customer;
+  //       } else {
+  //         throw Exception('Invalid response structure: No customer data found.');
+  //       }
+  //     } else if (response.statusCode == 401) {
+  //       throw Exception('Unauthorized access - Please log in again.');
+  //     } else {
+  //       throw Exception('Failed to load customer profile: ${response.reasonPhrase}');
+  //     }
+  //   } catch (error) {
+  //     throw Exception('Error in fetching customer profile: $error');
+  //   }
+  // }
 
   Future<void> logout() async {
     try {

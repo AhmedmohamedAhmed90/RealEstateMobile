@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:real_estate_mobile/models/CustomerModel.dart';
 import 'package:real_estate_mobile/modules/CustomerDataScreen/CustomerDataPage.dart';
 import 'package:real_estate_mobile/modules/MyPropertiesPage/MyPropertiesPage.dart';
 import '../CustomerDataScreen/CustomerDataRepository/CustomerDataRepository.dart';
@@ -24,7 +25,9 @@ class ContactProfilePage extends StatelessWidget {
                 if (state is ContactProfileLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is ContactProfileLoaded) {
+
                   final customer = state.customer;
+                  
                   return _buildProfileContent(context, customer, themeState);
                 } else if (state is ContactProfileError) {
                   return Center(child: Text(state.message));

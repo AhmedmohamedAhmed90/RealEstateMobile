@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../models/CustomerModel.dart';
+import '../../Home/cubit/customer_service.dart';
 import '../repository/contact_profile_repository.dart';
 import 'contact_profile_state.dart';
 
@@ -19,7 +20,8 @@ class ContactProfileCubit extends Cubit<ContactProfileState> {
         return;
       }
 
-      final Customer? customer = await repository.fetchCustomerProfile(userId);
+      //final Customer? customer = await repository.fetchCustomerProfile(userId);
+      Customer? customer = CustomerService().customer;
       if (customer != null) {
         // No need to fetch project details separately; they are included in customer data
         emit(ContactProfileLoaded(customer));
