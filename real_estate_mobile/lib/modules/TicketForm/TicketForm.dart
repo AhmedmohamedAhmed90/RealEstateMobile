@@ -15,6 +15,7 @@ import '../../models/OwnedPropertyModel.dart';
 import '../../shared/appcubit/ThemeCubit.dart';
 import '../../shared/components/CustomAppBar.dart';
 import '../../shared/components/CustomBottomNavBar.dart';
+import 'package:flutter_toastr/flutter_toastr.dart';
 
 class TicketForm extends StatefulWidget {
   final String serviceId;
@@ -146,12 +147,17 @@ class _TicketFormState extends State<TicketForm> {
         if (response.statusCode == 200) {
           widget.onSuccess();
           // Navigator.of(context).pop();
+          FlutterToastr.show("Ticket Submitted", context);
+
         } else {
           final String error = response.data['message'] ?? 'An unknown error occurred';
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+          FlutterToastr.show(error, context);
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+        FlutterToastr.show("error", context);
+
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:real_estate_mobile/modules/Home/home_wrapper.dart';
 import './cubit/LoginCubit.dart';
 import '../Signup/SignupPage.dart';
@@ -103,12 +104,13 @@ class LoginForm extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => MainWrapper()),
                     );
                   } else if (state is LoginFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Login Failed: ${state.errorMessage}'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text('Login Failed: ${state.errorMessage}'),
+                    //     backgroundColor: Colors.red,
+                    //   ),
+                    // );
+                    FlutterToastr.show('Login Failed: ${state.errorMessage}', context);
                   }
                 },
                 builder: (context, state) {
