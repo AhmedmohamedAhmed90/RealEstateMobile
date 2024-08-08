@@ -4,6 +4,7 @@ import 'package:real_estate_mobile/modules/Home/home_page.dart';
 import 'package:real_estate_mobile/modules/Home/home_wrapper.dart';
 import '../Login/LoginPage.dart';
 import 'cubit/SplashCubit.dart';
+import '../TicketsHistory/ticket_history_page.dart';
 
 class SplashScreen extends StatelessWidget {
   @override

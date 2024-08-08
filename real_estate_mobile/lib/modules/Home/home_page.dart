@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import './cubit/home_cubit.dart';
 import '../News/news_detail_page.dart';
-import '../ServicePage/ServicePage.dart';
 import '../QrCode/qr_code_page.dart';
 import '../Contact/ContactPage.dart';
 import '../ServicesScreen/ServicesScreen.dart';
